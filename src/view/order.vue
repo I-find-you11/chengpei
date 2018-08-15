@@ -53,7 +53,7 @@
         <div class="wraper">
             <order-item v-for="item of orderItem" :key="item.number" :data="item" @onPay="onPayClick"></order-item>
         </div>
-        <pay-dialog v-if="paying" :identify="payNumber"></pay-dialog>
+        <pay-dialog v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
     </div>
 </template>
 
@@ -125,6 +125,13 @@ export default {
         onPayClick(number){
             this.payNumber = number;
             this.paying = true;
+        },
+        cancel(){
+            this.paying = false;
+        },
+        confirm(data){
+            this.paying = false;
+            console.log(data);
         }
     }
 }
