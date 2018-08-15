@@ -49,9 +49,9 @@
             <img :src="leftImg" />
         </a>
         <span>{{text?text:''}}</span>
-        <a href="javascript:;" class="icon f-right">
-            <img :src="message" />
-            <span>1</span>
+        <a href="javascript:;" class="icon f-right" v-if="msg!==undefined">
+            <img src="../assets/img/message.png" />
+            <span v-if="msg>0">{{msg}}</span>
         </a>
     </header>
 </template>
@@ -61,7 +61,6 @@ export default {
     data(){
         return {
             leftImg: require('../assets/img/'+this.left+'.png'),
-            message: require('../assets/img/'+this.msg+'.png')
         }
     },
     props: ['left','msg',"text"]
