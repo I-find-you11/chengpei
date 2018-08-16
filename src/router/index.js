@@ -9,6 +9,10 @@ export default new Router({
       path: '/order',
       name: 'order',
       component: resolve => require(['../view/order'], resolve)
+    },
+    {
+      path: '/order-detail/:id',
+      component: resolve => require(['../view/order-detail'],resolve)
     }
   ]
 })
