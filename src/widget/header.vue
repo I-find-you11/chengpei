@@ -57,6 +57,7 @@
         span{
             font-size: .15rem;
             color: white;
+            width: .4rem
         }
     }
 </style>

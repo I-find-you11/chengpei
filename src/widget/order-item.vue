@@ -92,7 +92,7 @@
         </div>
         <div class="card-bottom clearfix">
             <div class="f-left">{{data.payWay}} <span>￥{{data.account}}</span>({{data.isPay?'已付':'未付'}})</div>
-            <a href="javascript:;" class="f-right hasPay" v-if="data.isPay&&data.status!='已签收'">订单详情</a>
+            <a :href="'#/order-detail/'+data.number" class="f-right hasPay" v-if="data.isPay&&data.status!='已签收'">订单详情</a>
             <a href="javascript:;" class="f-right notPay" v-if="!data.isPay" @click="onPay">付款</a>
             <a href="javascript:;" class="f-right notPay" v-if="data.status=='已签收'">评价</a>
         </div>
