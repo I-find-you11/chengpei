@@ -13,6 +13,10 @@ export default new Router({
     {
       path: '/order-detail/:id',
       component: resolve => require(['../view/order-detail'],resolve)
+    },
+    {
+      path: '/tracking/:id',
+      component: resolve => require(['../view/logistics-tracking'],resolve)
     }
   ]
 })

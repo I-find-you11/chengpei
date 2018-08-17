@@ -457,7 +457,7 @@
         </div>
 
         <div class="operator clearfix">
-            <button class="f-right">跟踪记录</button>
+            <button class="f-right" @click="onTrack">跟踪记录</button>
             <button class="f-right">异常历史</button>
             <button class="f-right">评价</button>
         </div>
@@ -477,6 +477,11 @@ export default {
     },
     components: {
         'user-header': Header
+    },
+    methods: {
+        onTrack(){
+            this.$router.push('/tracking/'+this.id);
+        }
     }
 }
 </script>
