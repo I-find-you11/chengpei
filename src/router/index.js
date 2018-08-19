@@ -17,6 +17,18 @@ export default new Router({
     {
       path: '/tracking/:id',
       component: resolve => require(['../view/logistics-tracking'],resolve)
-    }
+    },
+    {
+      path: '/goods-infor/:id',
+      component: resolve => require(['../view/goods-infor'],resolve)
+    },
+    {
+      path: '/shipping-details/:id',
+      component: resolve => require(['../view/shipping-details'],resolve)
+    },
+    {
+      path: '/Carpooling-distribution/:id',
+      component: resolve => require(['../view/Carpooling-distribution'],resolve)
+    },
   ]
 })
