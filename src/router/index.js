@@ -30,5 +30,13 @@ export default new Router({
       path: '/Carpooling-distribution/:id',
       component: resolve => require(['../view/Carpooling-distribution'],resolve)
     },
+    {
+      path: '/pay/:id',
+      component: resolve => require(['../view/pay'],resolve)
+    },
+    {
+      path: '/discuss/:id',
+      component: resolve => require(['../view/discuss'],resolve)
+    }
   ]
 })

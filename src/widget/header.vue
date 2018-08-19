@@ -41,6 +41,8 @@
         &>span{
             line-height: .44rem;
             position: absolute;
+            width: 4em;
+            text-align: center;
             left: 50%;
             margin-left: -2em;
         }

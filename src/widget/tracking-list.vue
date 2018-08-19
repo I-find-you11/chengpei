@@ -39,9 +39,9 @@
 </style>
 
 <template>
-    <div class="box current">
+    <div class="box" :class="isCurrent?'current':'sdf'">
         <i></i>
-        <div class="info" :class="isCurrent?'current':'sdf'">
+        <div class="info">
             <p>{{initData.contain}}</p>
             <p>&ensp;{{initData.time}}</p>
         </div>
