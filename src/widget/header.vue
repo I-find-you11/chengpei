@@ -74,7 +74,7 @@
             <img :src="leftImg">
             <span>返回</span>
         </a>
-        <span>{{text?text:''}}</span>
+        <slot><span>{{text?text:''}}</span></slot>
         <a href="javascript:;" class="icon f-right" v-if="msg!==undefined">
             <img src="../assets/img/message.png" />
             <span v-if="msg>0">{{msg}}</span>

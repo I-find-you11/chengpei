@@ -37,6 +37,10 @@ export default new Router({
     {
       path: '/discuss/:id',
       component: resolve => require(['../view/discuss'],resolve)
+    },
+    {
+      path: '/exception',
+      component: resolve => require(['../view/exception'],resolve)
     }
   ]
 })

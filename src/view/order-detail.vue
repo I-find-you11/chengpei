@@ -459,7 +459,7 @@
         <div class="operator clearfix">
             <button class="f-right" @click="onTrack">跟踪记录</button>
             <button class="f-right">异常历史</button>
-            <button class="f-right">评价</button>
+            <button class="f-right" @click="onDiscuss">评价</button>
         </div>
     </div>
 </template>
@@ -481,6 +481,9 @@ export default {
     methods: {
         onTrack(){
             this.$router.push('/tracking/'+this.id);
+        },
+        onDiscuss(){
+            this.$router.push('/discuss/'+this.id);
         }
     }
 }
