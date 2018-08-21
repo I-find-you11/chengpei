@@ -48,15 +48,13 @@
         <div class='goods photo'>
             <div class='title'>
                 <span>拍照</span>
-                <a 
-                    v-for='(item,index) in goods.photo'
+                <up-photo 
+                    v-for='(item,index) in goods.photo_arr' 
                     :key='index'
-                    v-show='index <= goods.photo_index'
-                >
-                    <img src='@/assets/img/photo.png' >
-                    <input type='file' @chang='photo_change'>
-                </a>
-               
+                    v-if='index<=goods.photo_index'
+                    @confirm = 'photo_change()'
+                    >
+                </up-photo>
             </div>
         </div>
         <div class='submit' @click='submit'>确认</div>
@@ -65,6 +63,7 @@
 
 <script>
     import header from '../widget/header'
+    import photo from '../widget/select1'
     export default {
         data() {
             return {
@@ -80,7 +79,7 @@
                     chang1 : ['日用品','文件','水果','电子产品'],
                     chang2 : ['托盘','木架','袋装','纸箱'],
                     chang2_arr : [],
-                    photo : new Array(3),
+                    photo_arr : new Array(3),
                     photo_index : 0
                 }
             }
@@ -108,14 +107,17 @@
                 }
             },
             photo_change() {
-
+                if(this.goods.photo_index<3){
+                    this.goods.photo_index ++;
+                }
             },
             submit() {
                 console.log('提交成功');
             }
         },
         components : {
-            'user-header': header
+            'user-header': header,
+            'up-photo': photo
         }
     }
 </script>

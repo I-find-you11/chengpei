@@ -4,9 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import './assets/scss/reset.scss'
+import AwesomePicker from 'vue-awesome-picker';
 
 Vue.config.productionTip = false
-
+Vue.use(AwesomePicker)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
