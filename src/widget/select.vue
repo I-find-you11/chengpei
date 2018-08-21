@@ -11,14 +11,18 @@
         height: .48rem;
         margin-right: .02rem;
     }
+    .isnum1 {
+        width:.3rem;height:.3rem;
+    }
 }
 </style>
 
 <template>
     <div class="photos">
-        <img v-for="img in imgs" :key="img" :src="img">
+        <img v-for="img in imgs" :key="img" :src="img" :class='{isnum1:num1}'>
         <input type="file" accept="image/*" ref="file" @change="loaderImg">
-        <img src="../assets/img/photo.png" @click="onPhoto" v-if="num&&imgs.length<num">
+        <img src="../assets/img/photo.png" @click="onPhoto" v-if="num&&imgs.length<num &&num1!=1">
+        <img src="../assets/img/photo1.png" @click="onPhoto" v-if="num1" style='width:auto;height:.3rem;'>
         <slot></slot>
     </div>
 </template>
@@ -30,7 +34,7 @@ export default {
             imgs: []
         }
     },
-    props: ['num'],
+    props: ['num','num1'],
     methods: {
         onPhoto(){
             if(this.num&&this.imgs.length>=this.num) return;

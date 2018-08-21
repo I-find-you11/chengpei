@@ -124,7 +124,7 @@
     border-radius: .05rem;
     position: fixed;
     bottom: .1rem;
-    z-index: 999;
+    z-index: 0;
     left:0;
     right: 0;
     margin: 0 auto;
@@ -165,11 +165,302 @@
         }
     }
 }
+.safe {
+    width: 100%;;
+    border-radius: .01rem;
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    left:0;
+    background: #fff;
+    border-bottom: .01rem solid #eeeeee;
+    .title {
+        height: .64rem;
+        line-height: .64rem;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 .17rem;
+        span {
+            font-size: .15rem;
+            &:first-child {
+                color: #999999;
+            }
+            &:last-child {
+                color: #d43d3e;
+            }
+        }
+        p {
+            font-size: .184rem;
+            color: #010101;
+        }
+    }
+    .value {
+        width: 3.34rem;
+        height: .42rem;
+        border:.01rem solid #eee;
+        border-radius: .05rem;
+        line-height: .42rem;
+        text-align: center;
+        position: relative;
+        font-size: .15rem;
+        color:#333333;
+        margin: .2rem auto 0;
+        span {
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0.08rem;
+            line-height: .42rem;
+        }
+    }
+    .select {
+        width: 3.34rem;
+        text-align: center;
+        color:#333333;
+        margin: .2rem auto 0;
+        font-size: .15rem;
+        div{
+            height: .69rem;
+            position: relative;
+            box-sizing: border-box;
+            padding-top: .13rem;
+            &:first-child {
+                border-bottom:.01rem solid #eee;
+            }
+            i {
+                width: .2rem;
+                height: .2rem;
+                position: absolute;
+                top:0;
+                bottom: 0;
+                margin: auto 0;
+                right: 0;
+            }
+            .unselected{
+                background: url('../assets/img/unselected.png') no-repeat center / contain;
+            }
+            .selected{
+                background: url('../assets/img/selected.png') no-repeat center / contain;
+            }
+        }
+        .red {
+            color: #d1433c;
+        }
+    }
+    .bottom {
+        padding: 0 .215rem;
+        border-top:.01rem solid #eee;
+        height: .71rem;
+        color:#666666;
+        font-size: .14rem;
+        padding-top: .15rem;
+        box-sizing: border-box;
+        a {
+            display: inline;
+            color:#0404fc;
+        }
+    }
+}
+.neednote {
+    width: 100%;
+    border-radius: .01rem;
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    left:0;
+    background: #fff;
+    border-bottom: .01rem solid #eeeeee;
+    .title {
+        height: .64rem;
+        line-height: .64rem;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 .17rem;
+        span {
+            font-size: .15rem;
+            &:first-child {
+                color: #999999;
+            }
+            &:last-child {
+                color: #d43d3e;
+            }
+        }
+        p {
+            font-size: .184rem;
+            color: #010101;
+        }
+    }
+    .need {
+        width: 3.34rem;
+        margin: .18rem auto 0;
+        &>p{
+            color: #666666;
+            font-size: .125rem;
+            margin-bottom: .15rem;
+        }
+        &>div{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            div {
+                width: 1rem;
+                height: .45rem;
+                border: .02rem solid #ebebeb;
+                border-radius: .05rem;
+                text-align: center;
+                color: #818181;
+                font-size: .15rem;
+                margin-right: .05rem;
+                margin-bottom: .15rem;
+                box-sizing: border-box;
+                padding-top: .02rem;
+                &:nth-child(3n) {
+                    margin-right: 0;
+                }
+                p{
+                    &:last-child{
+                        font-size: .12rem;
+                    }
+                }
+                &.on {
+                    border:none;
+                    background: url('../assets/img/bg_need.png');
+                    background-size:100% 100%;
+                }
+            }
+        }
+    }
+    .note_bottom {
+        width: 3.4rem;
+        box-sizing: border-box;
+        border: .01rem solid #f6f6f6;
+        padding: .1rem;
+        border-radius: .07rem;
+        margin: 0 auto .3rem;
+        &>div {
+            display: flex;
+            justify-content: space-between;
+            font-size: .15rem;
+            color: #333333;
+            &:last-child{
+                flex-wrap: wrap;
+            }
+            textarea {
+                width: 2.48rem;
+                border:none;
+                outline: none;
+                min-height: .55rem;
+            }
+            div{
+                width: 2.48rem;
+                height: .3rem;
+                font-size: 0;
+                line-height: .3rem;
+                margin-top: -.06rem;
+            }
+            
+        }
+    }
+}
+.topon {
+    color: #d43d3e;
+    background: #ffffff;
+}
+.record {
+    padding-top: .44rem;
+    &>.select {
+        background: #fff;
+        height: .56rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &>div {
+            width: 33%;
+            border-right: .01rem solid #e1e1e1;
+            text-align: center;
+            &:last-child{
+                border:none;
+            }
+        }
+    }
+    .list {
+        width: 3.5rem;
+        margin:.11rem auto 0;
+        &>div {
+            border-radius: .07rem;
+            box-shadow: 0 0 .05rem #e7e8e9;
+            background: #fff;
+            margin-bottom: .1rem;
+            &>div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: .14rem;
+                letter-spacing: .1px;
+                color: #434343;
+                padding: 0 .14rem;
+                border-bottom: #cecece .01rem solid;
+                &:first-child {
+                    line-height: .41rem;
+                    height: .41rem;
+                    div {
+                        height: .41rem;;
+                    }
+                    img {
+                        width: .3rem;
+                        vertical-align: middle;
+                        margin-top: -.05rem;
+                    }
+                }
+                &:last-child {
+                    padding: .05rem .14rem;
+                    div:first-child {
+                        width: 2.5rem;
+                        p {
+                            line-height: .28rem;
+                            font-size: .125rem;
+                            &:last-child {
+                                color: #838282;
+                            }
+                        }
+                    }
+                    div:last-child {
+                        line-height: 1;
+                        font-size: 0;
+                        width: .71rem;
+                        text-align: right;
+                        span {
+                            font-size: .125rem;
+                            color: #adadad;
+                        }
+                        span:last-child {
+                            display: inline-block;
+                            width: .71rem;
+                            height: .32rem;
+                            border-radius: .03rem;
+                            background: #e94d3e;
+                            font-size: .15rem;
+                            color: #fff;
+                            text-align: center;
+                            line-height: .32rem;
+                            margin-top: .05rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 </style>
 <template>
-    <div>
-        <user-header text='拼车配货'></user-header>
-        <div class='order_details'>
+    <div style='min-height:100vh' @click='hide'>
+        <user-header text='拼车配货' mark='true'>
+            <div >
+                <span @click='click_fn(0)' :class='{topon: index_top==0}'>预约发货</span>
+                <span @click='click_fn(1)' :class='{topon: index_top==1}'>发货记录</span>
+            </div>
+        </user-header>
+        <div class='order_details' v-if="index_top==0">
             <div class='adress'>
                 <img src='@/assets/img/adress.png' />
                 <div>
@@ -204,39 +495,183 @@
             <div class='item time'>
                 <img src='@/assets/img/detail1.png' />
                 <div>
-                    <span :class='order_derails.data.time?"on":""'><a href=''>{{order_derails.data.time? order_derails.data.time : '取货时间'}}</a></span>
+                    <span @click='show_picker(1)' :class='order_derails.data.time?"on":""'>{{order_derails.data.time? order_derails.data.time : '取货时间'}}</span>
                     <div>
                         <img src='@/assets/img/icon_1.png'>
-                        <span :class='order_derails.data.insurance?"on":""'><a href=''>{{order_derails.data.insurance? order_derails.data.insurance : '货物保险'}}</a></span>
+                        <span @click.stop='safe_show' :class='order_derails.data.insurance?"on":""'>{{order_derails.data.insurance? order_derails.data.insurance : '货物保险'}}</span>
                     </div>
                 </div>
             </div>
             <div class='item note'>
                 <img src='@/assets/img/icon_2.png' />
                 <div>
-                    <span :class='order_derails.data.note?"on":""'><a href=''>{{order_derails.data.note? order_derails.data.note : '需求备注'}}</a></span>
+                    <span @click.stop='neednote_show' :class='order_derails.data.note?"on":""'>{{order_derails.data.note? '有需求' : '需求备注'}}</span>
                     <div>
                         <img src='@/assets/img/detail3.png'>
-                        <span :class='order_derails.data.premium?"on":""'><a href=''>{{order_derails.data.premium? order_derails.data.premium : '我要加价'}}</a></span>
+                        <span @click='show_picker(2)' :class='order_derails.data.premium?"on":""'>{{order_derails.data.premium? order_derails.data.premium : '我要加价'}}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class='footer'>
+        <div class='footer' v-if="index_top==0">
             <div class='last_price'>
                 <p>￥<span>{{order_derails.data.cost?order_derails.data.cost : 0}}</span></p>
                 <a :href='"#/shipping-details/" + order_derails.data.id'>查看明细></a>
             </div>
             <div class='submit' :class='{on:validation}' @click='submit'>确认下单</div>
         </div>
+
+        <!-- 收货时间 -->
+        <awesome-picker
+            ref="picker1"
+            :data="picker1.data"
+            :anchor="picker1.anchor"
+            :textTitle="picker1.textTitle"
+            :textConfirm="picker1.textConfirm"
+            :textCancel="picker1.textCancel"
+            :colorTitle="picker1.colorTitle"
+            :colorConfirm="picker1.colorConfirm"
+            :colorCancel="picker1.colorCancel"
+            :swipeTime="picker1.swipeTime"
+            @cancel="handlePickerCancel"
+            @confirm="handlePickerConfirm">
+        </awesome-picker>
+
+        <!-- 收货时间 -->
+        <awesome-picker
+            ref="picker2"
+            :data="picker2.data"
+            :anchor="picker2.anchor"
+            :textTitle="picker2.textTitle"
+            :textConfirm="picker2.textConfirm"
+            :textCancel="picker2.textCancel"
+            :colorTitle="picker2.colorTitle"
+            :colorConfirm="picker2.colorConfirm"
+            :colorCancel="picker2.colorCancel"
+            :swipeTime="picker2.swipeTime"
+            @cancel="handlePickerCancel"
+            @confirm="handlePickerConfirm">
+        </awesome-picker>
+
+        <!-- 支付 -->
+        <pay-dialog @click.stop="" v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
+
+        <!-- 货物保险 -->
+        <div class='safe' v-if='safeshow'  @click.stop="">
+            <div class='title'><span @click='safe_cancel'>取消</span><p>货物保险</p><span @click='safe_confirm'>确定</span></div>
+            <div class='value'><span>货物价值</span><p>{{safe.value?safe.value: 0}}</p></div>
+            <div class='select'>
+                <div class='pay' @click="selectPayWay('pay_i')">
+                    <p>超出部分额外支付保费<span class='red'>5.6元</span></p>
+                    <p>（不支持现金支付）</p>
+                    <i :class="selectWay=='pay_i'?'selected':'unselected'"></i>
+                </div>
+                <div class='free' @click="selectPayWay('free_i')">
+                    <p class='red'>免费保险</p>
+                    <p>货物价值1126元内</p>
+                    <i :class="selectWay=='free_i'?'selected':'unselected'"></i>
+                </div>
+            </div>
+            <div class='bottom'>
+                <p>若配送导致货物损坏或丢失，按照实际价值进行赔付免赔额500元(不赔付)，选择投保即同意 <a>保险协议</a></p>
+            </div>
+        </div>
+
+        <!-- 需求备注 -->
+        <div class='neednote' v-if='neednoteshow'  @click.stop="">
+            <div class='title'><span @click='neednote_cancel'>取消</span><p>货物保险</p><span @click='neednote_confirm'>确定</span></div>
+            <div class='need'>
+                <p><img src=''>选择下列内容，方便司机了解能否提供需求，减少纠纷。</p>
+                <div>
+                    <div v-for='(item,index) in neednotes_arr'
+                        :key='index'
+                        @click='neednote_click(item)'
+                        :class='{on:item.bg}'
+                        >
+                        <p>{{item.value1}}</p>
+                        <p>({{item.value2}})</p>
+                    </div>
+                </div>
+            </div>
+            <div class='note_bottom'>
+                <div>
+                    <span>备注</span>
+                    <textarea v-model='neednote.content' placeholder="点击输入备注留言（可不填）"></textarea>
+                </div>
+                <div>
+                    <span>照片</span>
+                    <div>
+                        <up-photo num='1' num1='1'></up-photo>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 送货记录 -->
+        <div class='record' v-if="index_top==1">
+            <div class='select'>
+                <div>
+                    <user-select @confirm='confirm1' :option='option.adress' :type='"adress"'></user-select>
+                </div>
+                <div>
+                    <user-select @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
+                </div>
+                <div>
+                    <user-select @confirm='confirm1' :option='option.type2' :type='"type2"'></user-select>
+                </div>
+            </div>
+            <div class='list'>
+                <div v-for='(item,index) in record.data' :key='index'>
+                    <div>
+                        <div>
+                            <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
+                        </div>
+                        <span>{{item.long}}</span>
+                    </div>
+                    <div>
+                        <div>
+                            <p>{{item.content}}</p>
+                            <p>{{item.datetime}}</p>
+                        </div>
+                        <div>
+                            <span>{{item.time}}</span>
+                            <span>重发</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import header from '../widget/header'
+    import PayDialog from '../widget/pay-dialog1'
+    import select from '../widget/select2'
+    import select1 from '../widget/select'
     export default {
         data() {
             return {
+                paying : false,
+                payNumber: null,
+                picker1 : {
+                    data : [
+                        ['今天', '明天', '后天'],
+                        ['0:00-1:00', '1:00:2:00', '2:00-3:00', '3:00-4:00', '4:00-5:00', '5:00-6:00', '6:00-7:00', 
+                         '7:00-8:00', '8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00','12:00-13:00', '13:00-14:00', 
+                         '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00','19:00-20:00', '20:00-21:00', 
+                         '21:00-22:00', '22:00-23:00', '23:00-24:00'],
+                        //['9折', '9折', '9折', '9折', '9折', '9折', '9折', '9折', '9折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折']      
+                    ],
+                    textTitle : '取货时间'
+                },
+                picker2 : {
+                    data:[['回付·收到货后我付款','提付·取货时付款','现付·现在付款','到付·收货人付款','月结·请先开通']],
+                    textTitle : '支付方式',
+                    anchor:[{ 
+                        index: 2
+                    }]
+                },
                 order_derails : {
                     data : {
                         adress_start : {
@@ -256,22 +691,170 @@
                                 infor : '建材 5件 200公斤/2方'
                             }
                         ],
-                        time : '今天11：00-12：00',
-                        insurance : '免费保险',
-                        note: '1',
+                        time : '',
+                        insurance : '',
+                        note: null,
                         premium : '',
                         cost : '',
                         id: 1
                     }
+                },
+                safe : {
+                    value: '200'
+                },
+                selectWay: null,
+                safeshow:false,
+                neednoteshow:false,
+                neednotes_arr : [{
+                    value1 : '电子回单',
+                    value2 : '免费',
+                    color  :  false,
+                    bg:false
+                },{
+                    value1 : '纸质回单',
+                    value2 : '免费',
+                    color  :  false,
+                    bg:false
+                },{
+                    value1 : '搬运搬楼',
+                    value2 : '与司机另议',
+                    color  :  true,
+                    bg:false
+                },{
+                    value1 : '走高速,过高桥',
+                    value2 : '我承担费用',
+                    color  :  true,
+                    bg:false
+                },{
+                    value1 : '需要装卸',
+                    value2 : '与司机另议',
+                    color  :  true,
+                    bg:false
+                },{
+                    value1 : '需开发票',
+                    value2 : '限在线支付',
+                    color  :  true,
+                    bg:false
+                }],
+                index_top:0,
+                option : {
+                    adress : [
+                        '嘉兴市',
+                        '上海市',
+                        '浙江市',
+                        '江苏省',
+                        '南京市',
+                        '深圳市'
+                    ],
+                    type1 : ['出发地','目的地','出发地1','出发地二','出发地三','出发地四','出发第五'],
+                    type2 : ['全部','单独','总共','个别']
+                },
+                neednote : {
+                    centont: ''
+                },
+                record : {
+                    data : [
+                        {
+                            ad_start: '嘉兴市 武原街道',
+                            ad_end: '杭州市 华西镇',
+                            long: '130km',
+                            content: '五金建材 500公斤/1方 2.7米中货车',
+                            time: '1分钟前',
+                            datetime:'今天08:05前取货 / 距我13km'
+                        },
+                        {
+                            ad_start: '嘉兴市 武原街道',
+                            ad_end: '杭州市 华西镇',
+                            long: '130km',
+                            content: '五金建材 500公斤/1方 2.7米中货车',
+                            time: '1分钟前',
+                            datetime:'今天08:05前取货 / 距我13km'
+                        },
+                        {
+                            ad_start: '嘉兴市 武原街道',
+                            ad_end: '杭州市 华西镇',
+                            long: '130km',
+                            content: '五金建材 500公斤/1方 2.7米中货车',
+                            time: '1分钟前',
+                            datetime:'今天08:05前取货 / 距我13km'
+                        },
+                        {
+                            ad_start: '嘉兴市 武原街道',
+                            ad_end: '杭州市 华西镇',
+                            long: '130km',
+                            content: '五金建材 500公斤/1方 2.7米中货车',
+                            time: '1分钟前',
+                            datetime:'今天08:05前取货 / 距我13km'
+                        }
+                    ]
                 }
             }
         },
         methods : {
             submit() {
+                this.paying = true;
                 if(this.validation) {
                     console.log('提交成功');
                 }
             },
+            show_picker(index){
+                this.$refs['picker' + index].show();
+            },
+            handlePickerCancel() {
+                console.log(1);
+            },
+            handlePickerConfirm(data) {
+                console.log(data);
+                if(data.length>1 ) {
+                    this.order_derails.data.time = data[0].value + data[1].value;
+                }
+            },
+            safe_cancel() {
+                this.safeshow = false;
+            },
+            safe_confirm(data){
+                this.safeshow = false;
+                console.log(data);
+            },
+            safe_show() {
+                this.safeshow = true;
+            },
+            neednote_cancel() {
+                this.neednoteshow = false;
+            },
+            neednote_confirm(data){
+                this.neednoteshow = false;
+                console.log(data);
+            },
+            neednote_show() {
+                this.neednoteshow = true;
+            },
+            neednote_click(item) {
+                item.bg = !item.bg;
+            },
+            cancel(){
+                this.paying = false;
+            },
+            confirm(data){
+                this.paying = false;
+                console.log(data);
+            },
+            selectPayWay(type){
+                this.selectWay = type;
+            },
+            click_fn(index) {
+                this.index_top = index;
+                console.log(1)
+            },
+            confirm1(data) {
+                console.log(data);
+            },
+            hide() {
+                console.log(11);
+                this.neednoteshow = false;
+                this.safeshow = false;
+            }
+
            
         },
         computed: {
@@ -285,7 +868,10 @@
             }
         },
         components : {
-            'user-header': header
+            'user-header': header,
+            'pay-dialog': PayDialog,
+            'user-select': select,
+            'up-photo' : select1
         }
     }
 </script>

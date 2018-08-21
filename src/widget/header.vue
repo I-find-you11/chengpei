@@ -46,6 +46,29 @@
             left: 50%;
             margin-left: -2em;
         }
+        &>div {
+            width: 1.42rem;
+            height: .31rem; 
+            position: absolute;
+            border-radius: .07rem;
+            box-sizing: border-box;
+            left: 50%;
+            color: #fff;
+            background: #fff;
+            margin-left: -.71rem;
+            line-height: .29rem;
+            text-align: center;
+            font-size: 0;
+            border:.01rem solid #fff;
+            overflow: hidden;
+            span {
+                display: inline-block;
+                width: 50%;
+                height: 100%;
+                font-size: .14rem;
+                background: #d43d3e;
+            }
+        }
     }
     .back{
         height: .2rem;
@@ -79,6 +102,9 @@
             <img src="../assets/img/message.png" />
             <span v-if="msg>0">{{msg}}</span>
         </a>
+        <a href="javascript:;" class="icon f-right" v-if="mark!==undefined">
+            <img src="../assets/img/message1.png" />
+        </a>
     </header>
 </template>
 
@@ -89,7 +115,7 @@ export default {
             leftImg: this.left?require('../assets/img/'+this.left+'.png'):require('../assets/img/back.png'),
         }
     },
-    props: ['left','msg',"text"],
+    props: ['left','msg',"text",'mark'],
     methods: {
         back(){
             this.$router.go(-1);
