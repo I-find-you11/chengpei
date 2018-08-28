@@ -520,6 +520,21 @@
             text-align: center;
             border-radius: .03rem;
             font-size: .15rem;
+            
+            &.on {
+                color: #fe0000;
+                border-color: #fe0000;
+            }
+        }
+        input {
+            width: 3rem;
+            height: .4rem;
+            font-size: .15rem;
+            text-align: center;
+            color: #d4d4d4;
+            outline: none;
+            border:.01rem solid #d4d4d4;
+            border-radius: .03rem;
         }
     }
     .bottom {
@@ -650,15 +665,15 @@
         <div class='alert_all' v-if="paythanks">
             <div class='paythanks'>
                 <div class="title">感谢费</div>
-                <div class='content'>
-                    <span>10元</span>
-                    <span>15元</span>
-                    <span>20元</span>
-                    <span>其他 ></span>
+                <div class='content' v-if='!paythanks_num_show'>
+                    <span @click='paythank_click(index)' v-for='(item,index) in paythanks_data' :key='index' :class='{on:index==paythank_index}'>{{item}}</span>
+                </div>
+                <div class='content' v-if='paythanks_num_show'>
+                    <input v-model='paythanks_num' placeholder="点击输入金额最多120元">
                 </div>
                 <div class='bottom'>
-                    <span>取消</span>
-                    <span>确定</span>
+                    <span @click='paythanks_show(false)'>取消</span>
+                    <span @click='paythanks_show(true)'>确定</span>
                 </div>
             </div>
         </div>
@@ -770,7 +785,12 @@
     export default {
         data() {
             return {
-                paythanks:true,
+                paythanks_prve : '',
+                paythanks_num : null,
+                paythanks_num_show: false,
+                paythanks:false,
+                paythanks_data :['10元','15元','20元','其他 >'],
+                paythank_index:0,
                 paying : false,
                 payNumber: null,
                 picker1 : {
@@ -1022,6 +1042,32 @@
             }
         },
         methods : {
+             paythanks_show (bl) {
+                if(!bl) {
+                    this.order_derails.data.premium = this.paythanks_prve;
+                }
+                if(this.paythanks_num_show) {
+                    console.log(111);
+                    if(!this.paythanks_num) {
+                        alert('金额不能为空');
+                        return;
+                    }
+                    this.order_derails.data.premium = this.paythanks_num + '元'
+                }
+                this.paythanks_num_show = false;
+                this.paythanks = false;
+                this.paythank_index = 0;
+
+            },
+            paythank_click (index) {
+                this.paythanks_prve = this.order_derails.data.premium
+                this.paythank_index = index;
+                this.order_derails.data.premium = this.paythanks_data[index];
+                if(index == 3) {
+                    this.paythanks_num='';
+                    this.paythanks_num_show = true;
+                }
+            },
             record_all(){
                 this.option.adress.index=1;
                 this.option.type1.index=1;
@@ -1034,7 +1080,11 @@
                 }
             },
             show_picker(index){
-                this.$refs['picker' + index].show();
+                if(index==1) {
+                    this.$refs['picker' + index].show();
+                }else {
+                    this.paythanks = true;
+                }
             },
             handlePickerCancel() {
                 console.log(1);
