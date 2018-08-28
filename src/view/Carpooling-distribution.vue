@@ -179,6 +179,8 @@
         line-height: .64rem;
         display: flex;
         justify-content: space-between;
+        border-bottom: .01rem solid #eeeeee;
+        font-size: .15rem;
         padding: 0 .17rem;
         span {
             font-size: .15rem;
@@ -211,6 +213,14 @@
             bottom: 0;
             left: 0.08rem;
             line-height: .42rem;
+        }
+        input {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            background: none;
+            border:none;
+            text-align: center;
         }
     }
     .select {
@@ -275,6 +285,7 @@
         line-height: .64rem;
         display: flex;
         justify-content: space-between;
+        border-bottom: .01rem solid #eeeeee;
         padding: 0 .17rem;
         span {
             font-size: .15rem;
@@ -378,11 +389,31 @@
             width: 33%;
             border-right: .01rem solid #e1e1e1;
             text-align: center;
+            position: relative;
             &:last-child{
                 border:none;
             }
+            &>p {
+                text-align: center;
+                font-size: .16rem;
+            }
+            &>span {
+                position: absolute;
+                top:0;
+                bottom: 0;
+                font-size: 0;
+                right: .2rem;
+                line-height: .21rem;
+                img {
+                    vertical-align: middle;
+                    width: .05rem;
+                    transform:rotate(90deg);
+                }
+            }
         }
+        
     }
+    
     .list {
         width: 3.5rem;
         margin:.11rem auto 0;
@@ -489,7 +520,7 @@
                 <img src='@/assets/img/detail2.png' />
                 <div>
                     <p>货物信息{{order_derails.data.goods.length != 0 ? order_derails.data.goods.length + 1 : ''}}</p>
-                    <a href='"#/goods-infor/" + order_derails.data.id'>+添加货物</a>
+                    <a :href='"#/goods-infor/" + order_derails.data.id'>+添加货物</a>
                 </div>
             </div>
             <div class='item time'>
@@ -559,7 +590,7 @@
         <!-- 货物保险 -->
         <div class='safe' v-if='safeshow'  @click.stop="">
             <div class='title'><span @click='safe_cancel'>取消</span><p>货物保险</p><span @click='safe_confirm'>确定</span></div>
-            <div class='value'><span>货物价值</span><p>{{safe.value?safe.value: 0}}</p></div>
+            <div class='value'><span>货物价值</span><input v-model="safe.value"></div>
             <div class='select'>
                 <div class='pay' @click="selectPayWay('pay_i')">
                     <p>超出部分额外支付保费<span class='red'>5.6元</span></p>
@@ -579,7 +610,7 @@
 
         <!-- 需求备注 -->
         <div class='neednote' v-if='neednoteshow'  @click.stop="">
-            <div class='title'><span @click='neednote_cancel'>取消</span><p>货物保险</p><span @click='neednote_confirm'>确定</span></div>
+            <div class='title'><span @click='neednote_cancel'>取消</span><p>需求备注</p><span @click='neednote_confirm'>确定</span></div>
             <div class='need'>
                 <p><img src=''>选择下列内容，方便司机了解能否提供需求，减少纠纷。</p>
                 <div>
@@ -611,13 +642,16 @@
         <div class='record' v-if="index_top==1">
             <div class='select'>
                 <div>
-                    <user-select @confirm='confirm1' :option='option.adress' :type='"adress"'></user-select>
+                    <user-select @confirm='confirm1'  :option='option.adress' :type='"adress"'></user-select>
+                    <span><img src='@/assets/img/arrow.png'></span>
                 </div>
                 <div>
-                    <user-select @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
+                    <user-select  @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
+                    <span><img src='@/assets/img/arrow.png'></span>
                 </div>
                 <div>
-                    <user-select @confirm='confirm1' :option='option.type2' :type='"type2"'></user-select>
+                    <p @click='record_all'>全部</p>
+                    <span><img src='@/assets/img/arrow.png'></span>
                 </div>
             </div>
             <div class='list'>
@@ -656,13 +690,118 @@
                 payNumber: null,
                 picker1 : {
                     data : [
-                        ['今天', '明天', '后天'],
-                        ['0:00-1:00', '1:00:2:00', '2:00-3:00', '3:00-4:00', '4:00-5:00', '5:00-6:00', '6:00-7:00', 
-                         '7:00-8:00', '8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00','12:00-13:00', '13:00-14:00', 
-                         '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00','19:00-20:00', '20:00-21:00', 
-                         '21:00-22:00', '22:00-23:00', '23:00-24:00'],
-                        //['9折', '9折', '9折', '9折', '9折', '9折', '9折', '9折', '9折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折']      
-                    ],
+                        {
+                            value:'今天',
+                            children:[{
+                                value:'0:00-1:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'1:00:2:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'2:00-3:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'3:00-4:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'4:00-5:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'5:00-6:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'6:00-7:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'7:00-8:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'8:00-9:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'10:00-11:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'11:00-12:00',
+                                children:[{value:'9.5折'}]
+                            }]
+                        },
+                        {
+                            value:'明天',
+                            children:[{
+                                value:'0:00-1:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'1:00:2:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'2:00-3:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'3:00-4:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'4:00-5:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'5:00-6:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'6:00-7:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'7:00-8:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'8:00-9:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'10:00-11:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'11:00-12:00',
+                                children:[{value:'9.5折'}]
+                            }]
+                        },
+                        {
+                            value:'后天',
+                            children:[{
+                                value:'0:00-1:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'1:00:2:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'2:00-3:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'3:00-4:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'4:00-5:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'5:00-6:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'6:00-7:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'7:00-8:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'8:00-9:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'10:00-11:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'11:00-12:00',
+                                children:[{value:'9.5折'}]
+                            }]
+                        }
+                        ],
                     textTitle : '取货时间'
                 },
                 picker2 : {
@@ -700,7 +839,7 @@
                     }
                 },
                 safe : {
-                    value: '200'
+                    value: '0'
                 },
                 selectWay: null,
                 safeshow:false,
@@ -738,16 +877,23 @@
                 }],
                 index_top:0,
                 option : {
-                    adress : [
+                    adress : {
+                        data:[
+                        '出发地',
+                        '全国',
                         '嘉兴市',
                         '上海市',
                         '浙江市',
                         '江苏省',
                         '南京市',
                         '深圳市'
-                    ],
-                    type1 : ['出发地','目的地','出发地1','出发地二','出发地三','出发地四','出发第五'],
-                    type2 : ['全部','单独','总共','个别']
+                        ],
+                        index:0
+                    },
+                    type1 : {
+                        data:['目的地','全国','目的地1','目的地二','目的地三','目的地四','目的地五'],
+                        index:0
+                    },
                 },
                 neednote : {
                     centont: ''
@@ -791,6 +937,11 @@
             }
         },
         methods : {
+            record_all(){
+                this.option.adress.index=1;
+                this.option.type1.index=1;
+                console.log(1);
+            },
             submit() {
                 this.paying = true;
                 if(this.validation) {
