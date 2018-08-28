@@ -62,12 +62,17 @@
             font-size: 0;
             border:.01rem solid #fff;
             overflow: hidden;
+            display: flex;
+            flex-wrap:nowrap ;
             span {
                 display: inline-block;
                 width: 50%;
                 height: 100%;
                 font-size: .14rem;
                 background: #d43d3e;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
             }
         }
     }
