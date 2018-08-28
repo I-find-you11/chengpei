@@ -267,11 +267,10 @@
     height: .53rem;
     text-align: center;
     line-height: .53rem;
-    position: fixed;
     bottom: .1rem;
     z-index: 999;
     left:0;
     right: 0;
-    margin: 0 auto;
+    margin: 0.9rem auto 0;
 }
 </style>

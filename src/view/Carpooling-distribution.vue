@@ -482,6 +482,14 @@
         }
     }
 }
+.alert_all {
+    height: 100vh;
+    width: 100vw;
+    position:fixed;
+    top:0;
+    bottom: 0;
+    background: rgba(0,0,0,.2);
+}
 </style>
 <template>
     <div style='min-height:100vh' @click='hide'>
@@ -585,91 +593,99 @@
         </awesome-picker>
 
         <!-- 支付 -->
-        <pay-dialog @click.stop="" v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
+        <div class='alert_all' v-if="paying">
+            <pay-dialog @click.stop="" v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
+        </div>
 
         <!-- 货物保险 -->
-        <div class='safe' v-if='safeshow'  @click.stop="">
-            <div class='title'><span @click='safe_cancel'>取消</span><p>货物保险</p><span @click='safe_confirm'>确定</span></div>
-            <div class='value'><span>货物价值</span><input v-model="safe.value"></div>
-            <div class='select'>
-                <div class='pay' @click="selectPayWay('pay_i')">
-                    <p>超出部分额外支付保费<span class='red'>5.6元</span></p>
-                    <p>（不支持现金支付）</p>
-                    <i :class="selectWay=='pay_i'?'selected':'unselected'"></i>
+        <div class='alert_all' v-if='safeshow'>
+            <div class='safe' v-if='safeshow'  @click.stop="">
+                <div class='title'><span @click='safe_cancel'>取消</span><p>货物保险</p><span @click='safe_confirm'>确定</span></div>
+                <div class='value'><span>货物价值</span><input v-model="safe.value"></div>
+                <div class='select'>
+                    <div class='pay' @click="selectPayWay('pay_i')">
+                        <p>超出部分额外支付保费<span class='red'>5.6元</span></p>
+                        <p>（不支持现金支付）</p>
+                        <i :class="selectWay=='pay_i'?'selected':'unselected'"></i>
+                    </div>
+                    <div class='free' @click="selectPayWay('free_i')">
+                        <p class='red'>免费保险</p>
+                        <p>货物价值1126元内</p>
+                        <i :class="selectWay=='free_i'?'selected':'unselected'"></i>
+                    </div>
                 </div>
-                <div class='free' @click="selectPayWay('free_i')">
-                    <p class='red'>免费保险</p>
-                    <p>货物价值1126元内</p>
-                    <i :class="selectWay=='free_i'?'selected':'unselected'"></i>
+                <div class='bottom'>
+                    <p>若配送导致货物损坏或丢失，按照实际价值进行赔付免赔额500元(不赔付)，选择投保即同意 <a>保险协议</a></p>
                 </div>
-            </div>
-            <div class='bottom'>
-                <p>若配送导致货物损坏或丢失，按照实际价值进行赔付免赔额500元(不赔付)，选择投保即同意 <a>保险协议</a></p>
             </div>
         </div>
 
         <!-- 需求备注 -->
-        <div class='neednote' v-if='neednoteshow'  @click.stop="">
-            <div class='title'><span @click='neednote_cancel'>取消</span><p>需求备注</p><span @click='neednote_confirm'>确定</span></div>
-            <div class='need'>
-                <p><img src=''>选择下列内容，方便司机了解能否提供需求，减少纠纷。</p>
-                <div>
-                    <div v-for='(item,index) in neednotes_arr'
-                        :key='index'
-                        @click='neednote_click(item)'
-                        :class='{on:item.bg}'
-                        >
-                        <p>{{item.value1}}</p>
-                        <p>({{item.value2}})</p>
+        <div class='alert_all' v-if='neednoteshow'>
+            <div class='neednote' v-if='neednoteshow'  @click.stop="">
+                <div class='title'><span @click='neednote_cancel'>取消</span><p>需求备注</p><span @click='neednote_confirm'>确定</span></div>
+                <div class='need'>
+                    <p><img src=''>选择下列内容，方便司机了解能否提供需求，减少纠纷。</p>
+                    <div>
+                        <div v-for='(item,index) in neednotes_arr'
+                            :key='index'
+                            @click='neednote_click(item)'
+                            :class='{on:item.bg}'
+                            >
+                            <p>{{item.value1}}</p>
+                            <p>({{item.value2}})</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='note_bottom'>
-                <div>
-                    <span>备注</span>
-                    <textarea v-model='neednote.content' placeholder="点击输入备注留言（可不填）"></textarea>
-                </div>
-                <div>
-                    <span>照片</span>
+                <div class='note_bottom'>
                     <div>
-                        <up-photo num='1' num1='1'></up-photo>
+                        <span>备注</span>
+                        <textarea v-model='neednote.content' placeholder="点击输入备注留言（可不填）"></textarea>
+                    </div>
+                    <div>
+                        <span>照片</span>
+                        <div>
+                            <up-photo num='1' num1='1'></up-photo>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 送货记录 -->
-        <div class='record' v-if="index_top==1">
-            <div class='select'>
-                <div>
-                    <user-select @confirm='confirm1'  :option='option.adress' :type='"adress"'></user-select>
-                    <span><img src='@/assets/img/arrow.png'></span>
-                </div>
-                <div>
-                    <user-select  @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
-                    <span><img src='@/assets/img/arrow.png'></span>
-                </div>
-                <div>
-                    <p @click='record_all'>全部</p>
-                    <span><img src='@/assets/img/arrow.png'></span>
-                </div>
-            </div>
-            <div class='list'>
-                <div v-for='(item,index) in record.data' :key='index'>
+        <div class='alert_all' v-if='index_top==1'>
+            <div class='record' v-if="index_top==1">
+                <div class='select'>
                     <div>
-                        <div>
-                            <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
-                        </div>
-                        <span>{{item.long}}</span>
+                        <user-select @confirm='confirm1'  :option='option.adress' :type='"adress"'></user-select>
+                        <span><img src='@/assets/img/arrow.png'></span>
                     </div>
                     <div>
+                        <user-select  @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
+                        <span><img src='@/assets/img/arrow.png'></span>
+                    </div>
+                    <div>
+                        <p @click='record_all'>全部</p>
+                        <span><img src='@/assets/img/arrow.png'></span>
+                    </div>
+                </div>
+                <div class='list'>
+                    <div v-for='(item,index) in record.data' :key='index'>
                         <div>
-                            <p>{{item.content}}</p>
-                            <p>{{item.datetime}}</p>
+                            <div>
+                                <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
+                            </div>
+                            <span>{{item.long}}</span>
                         </div>
                         <div>
-                            <span>{{item.time}}</span>
-                            <span>重发</span>
+                            <div>
+                                <p>{{item.content}}</p>
+                                <p>{{item.datetime}}</p>
+                            </div>
+                            <div>
+                                <span>{{item.time}}</span>
+                                <span>重发</span>
+                            </div>
                         </div>
                     </div>
                 </div>
