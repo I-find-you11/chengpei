@@ -74,12 +74,13 @@
             top:0;
             bottom: 0;
             margin: auto 0;
-            line-height: .28rem; 
-            text-align: center;
             border: .01rem solid #f6b8b2;
             color:#f6b8b2;
             font-size: .13rem;
             border-radius: .02rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
         }
         &.adress {
             line-height:.97rem;
@@ -472,9 +473,10 @@
                             background: #e94d3e;
                             font-size: .15rem;
                             color: #fff;
-                            text-align: center;
-                            line-height: .32rem;
                             margin-top: .05rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-around;
                         }
                     }
                 }
