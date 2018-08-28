@@ -9,6 +9,7 @@
         color: white;
         position: fixed;
         left: 0;
+        z-index: 99;
         top: 0;
         display: flex;
         justify-content: space-between;

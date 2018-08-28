@@ -179,6 +179,8 @@
         line-height: .64rem;
         display: flex;
         justify-content: space-between;
+        border-bottom: .01rem solid #eeeeee;
+        font-size: .15rem;
         padding: 0 .17rem;
         span {
             font-size: .15rem;
@@ -211,6 +213,14 @@
             bottom: 0;
             left: 0.08rem;
             line-height: .42rem;
+        }
+        input {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            background: none;
+            border:none;
+            text-align: center;
         }
     }
     .select {
@@ -275,6 +285,7 @@
         line-height: .64rem;
         display: flex;
         justify-content: space-between;
+        border-bottom: .01rem solid #eeeeee;
         padding: 0 .17rem;
         span {
             font-size: .15rem;
@@ -378,11 +389,31 @@
             width: 33%;
             border-right: .01rem solid #e1e1e1;
             text-align: center;
+            position: relative;
             &:last-child{
                 border:none;
             }
+            &>p {
+                text-align: center;
+                font-size: .16rem;
+            }
+            &>span {
+                position: absolute;
+                top:0;
+                bottom: 0;
+                font-size: 0;
+                right: .2rem;
+                line-height: .21rem;
+                img {
+                    vertical-align: middle;
+                    width: .05rem;
+                    transform:rotate(90deg);
+                }
+            }
         }
+        
     }
+    
     .list {
         width: 3.5rem;
         margin:.11rem auto 0;
@@ -451,6 +482,83 @@
         }
     }
 }
+.alert_all {
+    height: 100vh;
+    width: 100vw;
+    position:fixed;
+    top:0;
+    bottom: 0;
+    background: rgba(0,0,0,.2);
+}
+.paythanks {
+    width: 3.5rem;
+    border-radius: .05rem;
+    margin: calc(50vh - 1rem) auto 0;
+    background: #fff;
+    font-size: .15rem;
+    .title {
+        height: .6rem;
+        line-height: .6rem;
+        text-align: center;
+        font-size: .16rem;
+        color: #000000;
+        border-bottom: .01rem solid #ebebeb;
+    }
+    .content {
+        height: .87rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: .01rem solid #ebebeb;
+        padding:0 .15rem;
+        span {
+            display: inline-block;
+            width: .71rem;
+            height: .32rem;
+            line-height: .32rem;
+            border: .01rem solid #bdbdbd;
+            text-align: center;
+            border-radius: .03rem;
+            font-size: .15rem;
+            
+            &.on {
+                color: #fe0000;
+                border-color: #fe0000;
+            }
+        }
+        input {
+            width: 3rem;
+            height: .4rem;
+            font-size: .15rem;
+            text-align: center;
+            color: #d4d4d4;
+            outline: none;
+            border:.01rem solid #d4d4d4;
+            border-radius: .03rem;
+        }
+    }
+    .bottom {
+        height: .52rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: .52rem;
+        font-size: 0;
+        span {
+            color:#d75052;
+            display: inline-block;
+            width: 48%;
+            font-size: .15rem;
+            text-align: center;
+            height: .4rem;
+            line-height: .4rem;
+            &:first-child {
+                color: #a2a2a2;
+                border-right:#d1d1d1 solid .02rem; 
+            }
+        }
+    }
+}
 </style>
 <template>
     <div style='min-height:100vh' @click='hide'>
@@ -489,7 +597,7 @@
                 <img src='@/assets/img/detail2.png' />
                 <div>
                     <p>货物信息{{order_derails.data.goods.length != 0 ? order_derails.data.goods.length + 1 : ''}}</p>
-                    <a href='"#/goods-infor/" + order_derails.data.id'>+添加货物</a>
+                    <a :href='"#/goods-infor/" + order_derails.data.id'>+添加货物</a>
                 </div>
             </div>
             <div class='item time'>
@@ -537,8 +645,8 @@
             @confirm="handlePickerConfirm">
         </awesome-picker>
 
-        <!-- 收货时间 -->
-        <awesome-picker
+        <!-- 支付方式 -->
+        <!-- <awesome-picker
             ref="picker2"
             :data="picker2.data"
             :anchor="picker2.anchor"
@@ -551,97 +659,122 @@
             :swipeTime="picker2.swipeTime"
             @cancel="handlePickerCancel"
             @confirm="handlePickerConfirm">
-        </awesome-picker>
+        </awesome-picker> -->
 
-        <!-- 支付 -->
-        <pay-dialog @click.stop="" v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
-
-        <!-- 货物保险 -->
-        <div class='safe' v-if='safeshow'  @click.stop="">
-            <div class='title'><span @click='safe_cancel'>取消</span><p>货物保险</p><span @click='safe_confirm'>确定</span></div>
-            <div class='value'><span>货物价值</span><p>{{safe.value?safe.value: 0}}</p></div>
-            <div class='select'>
-                <div class='pay' @click="selectPayWay('pay_i')">
-                    <p>超出部分额外支付保费<span class='red'>5.6元</span></p>
-                    <p>（不支持现金支付）</p>
-                    <i :class="selectWay=='pay_i'?'selected':'unselected'"></i>
+        <!-- 感谢费 -->
+        <div class='alert_all' v-if="paythanks">
+            <div class='paythanks'>
+                <div class="title">感谢费</div>
+                <div class='content' v-if='!paythanks_num_show'>
+                    <span @click='paythank_click(index)' v-for='(item,index) in paythanks_data' :key='index' :class='{on:index==paythank_index}'>{{item}}</span>
                 </div>
-                <div class='free' @click="selectPayWay('free_i')">
-                    <p class='red'>免费保险</p>
-                    <p>货物价值1126元内</p>
-                    <i :class="selectWay=='free_i'?'selected':'unselected'"></i>
+                <div class='content' v-if='paythanks_num_show'>
+                    <input v-model='paythanks_num' placeholder="点击输入金额最多120元">
+                </div>
+                <div class='bottom'>
+                    <span @click='paythanks_show(false)'>取消</span>
+                    <span @click='paythanks_show(true)'>确定</span>
                 </div>
             </div>
-            <div class='bottom'>
-                <p>若配送导致货物损坏或丢失，按照实际价值进行赔付免赔额500元(不赔付)，选择投保即同意 <a>保险协议</a></p>
+        </div>
+        <!-- 支付 -->
+        <div class='alert_all' v-if="paying">
+            <pay-dialog @click.stop="" v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
+        </div>
+
+        <!-- 货物保险 -->
+        <div class='alert_all' v-if='safeshow'>
+            <div class='safe' v-if='safeshow'  @click.stop="">
+                <div class='title'><span @click='safe_cancel'>取消</span><p>货物保险</p><span @click='safe_confirm'>确定</span></div>
+                <div class='value'><span>货物价值</span><input v-model="safe.value"></div>
+                <div class='select'>
+                    <div class='pay' @click="selectPayWay('pay_i')">
+                        <p>超出部分额外支付保费<span class='red'>5.6元</span></p>
+                        <p>（不支持现金支付）</p>
+                        <i :class="selectWay=='pay_i'?'selected':'unselected'"></i>
+                    </div>
+                    <div class='free' @click="selectPayWay('free_i')">
+                        <p class='red'>免费保险</p>
+                        <p>货物价值1126元内</p>
+                        <i :class="selectWay=='free_i'?'selected':'unselected'"></i>
+                    </div>
+                </div>
+                <div class='bottom'>
+                    <p>若配送导致货物损坏或丢失，按照实际价值进行赔付免赔额500元(不赔付)，选择投保即同意 <a>保险协议</a></p>
+                </div>
             </div>
         </div>
 
         <!-- 需求备注 -->
-        <div class='neednote' v-if='neednoteshow'  @click.stop="">
-            <div class='title'><span @click='neednote_cancel'>取消</span><p>货物保险</p><span @click='neednote_confirm'>确定</span></div>
-            <div class='need'>
-                <p><img src=''>选择下列内容，方便司机了解能否提供需求，减少纠纷。</p>
-                <div>
-                    <div v-for='(item,index) in neednotes_arr'
-                        :key='index'
-                        @click='neednote_click(item)'
-                        :class='{on:item.bg}'
-                        >
-                        <p>{{item.value1}}</p>
-                        <p>({{item.value2}})</p>
+        <div class='alert_all' v-if='neednoteshow'>
+            <div class='neednote' v-if='neednoteshow'  @click.stop="">
+                <div class='title'><span @click='neednote_cancel'>取消</span><p>需求备注</p><span @click='neednote_confirm'>确定</span></div>
+                <div class='need'>
+                    <p><img src=''>选择下列内容，方便司机了解能否提供需求，减少纠纷。</p>
+                    <div>
+                        <div v-for='(item,index) in neednotes_arr'
+                            :key='index'
+                            @click='neednote_click(item)'
+                            :class='{on:item.bg}'
+                            >
+                            <p>{{item.value1}}</p>
+                            <p>({{item.value2}})</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='note_bottom'>
-                <div>
-                    <span>备注</span>
-                    <textarea v-model='neednote.content' placeholder="点击输入备注留言（可不填）"></textarea>
-                </div>
-                <div>
-                    <span>照片</span>
+                <div class='note_bottom'>
                     <div>
-                        <up-photo num='1' num1='1'></up-photo>
+                        <span>备注</span>
+                        <textarea v-model='neednote.content' placeholder="点击输入备注留言（可不填）"></textarea>
+                    </div>
+                    <div>
+                        <span>照片</span>
+                        <div>
+                            <up-photo num='1' num1='1'></up-photo>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 送货记录 -->
-        <div class='record' v-if="index_top==1">
-            <div class='select'>
-                <div>
-                    <user-select @confirm='confirm1' :option='option.adress' :type='"adress"'></user-select>
-                </div>
-                <div>
-                    <user-select @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
-                </div>
-                <div>
-                    <user-select @confirm='confirm1' :option='option.type2' :type='"type2"'></user-select>
-                </div>
-            </div>
-            <div class='list'>
-                <div v-for='(item,index) in record.data' :key='index'>
+            <div class='record' v-if="index_top==1">
+                <div class='select'>
                     <div>
-                        <div>
-                            <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
-                        </div>
-                        <span>{{item.long}}</span>
+                        <user-select @confirm='confirm1'  :option='option.adress' :type='"adress"'></user-select>
+                        <span><img src='@/assets/img/arrow.png'></span>
                     </div>
                     <div>
+                        <user-select  @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
+                        <span><img src='@/assets/img/arrow.png'></span>
+                    </div>
+                    <div>
+                        <p @click='record_all'>全部</p>
+                        <span><img src='@/assets/img/arrow.png'></span>
+                    </div>
+                </div>
+                <div class='list'>
+                    <div v-for='(item,index) in record.data' :key='index'>
                         <div>
-                            <p>{{item.content}}</p>
-                            <p>{{item.datetime}}</p>
+                            <div>
+                                <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
+                            </div>
+                            <span>{{item.long}}</span>
                         </div>
                         <div>
-                            <span>{{item.time}}</span>
-                            <span>重发</span>
+                            <div>
+                                <p>{{item.content}}</p>
+                                <p>{{item.datetime}}</p>
+                            </div>
+                            <div>
+                                <span>{{item.time}}</span>
+                                <span>重发</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -652,17 +785,128 @@
     export default {
         data() {
             return {
+                paythanks_prve : '',
+                paythanks_num : null,
+                paythanks_num_show: false,
+                paythanks:false,
+                paythanks_data :['10元','15元','20元','其他 >'],
+                paythank_index:0,
                 paying : false,
                 payNumber: null,
                 picker1 : {
                     data : [
-                        ['今天', '明天', '后天'],
-                        ['0:00-1:00', '1:00:2:00', '2:00-3:00', '3:00-4:00', '4:00-5:00', '5:00-6:00', '6:00-7:00', 
-                         '7:00-8:00', '8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00','12:00-13:00', '13:00-14:00', 
-                         '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00','19:00-20:00', '20:00-21:00', 
-                         '21:00-22:00', '22:00-23:00', '23:00-24:00'],
-                        //['9折', '9折', '9折', '9折', '9折', '9折', '9折', '9折', '9折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折', '9.5折']      
-                    ],
+                        {
+                            value:'今天',
+                            children:[{
+                                value:'0:00-1:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'1:00:2:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'2:00-3:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'3:00-4:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'4:00-5:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'5:00-6:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'6:00-7:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'7:00-8:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'8:00-9:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'10:00-11:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'11:00-12:00',
+                                children:[{value:'9.5折'}]
+                            }]
+                        },
+                        {
+                            value:'明天',
+                            children:[{
+                                value:'0:00-1:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'1:00:2:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'2:00-3:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'3:00-4:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'4:00-5:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'5:00-6:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'6:00-7:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'7:00-8:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'8:00-9:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'10:00-11:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'11:00-12:00',
+                                children:[{value:'9.5折'}]
+                            }]
+                        },
+                        {
+                            value:'后天',
+                            children:[{
+                                value:'0:00-1:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'1:00:2:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'2:00-3:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'3:00-4:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'4:00-5:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'5:00-6:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'6:00-7:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'7:00-8:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'8:00-9:00',
+                                children:[{value:'9.5折'}]
+                            },{
+                                value:'10:00-11:00',
+                                children:[{value:'9折'}]
+                            },{
+                                value:'11:00-12:00',
+                                children:[{value:'9.5折'}]
+                            }]
+                        }
+                        ],
                     textTitle : '取货时间'
                 },
                 picker2 : {
@@ -700,7 +944,7 @@
                     }
                 },
                 safe : {
-                    value: '200'
+                    value: '0'
                 },
                 selectWay: null,
                 safeshow:false,
@@ -738,16 +982,23 @@
                 }],
                 index_top:0,
                 option : {
-                    adress : [
+                    adress : {
+                        data:[
+                        '出发地',
+                        '全国',
                         '嘉兴市',
                         '上海市',
                         '浙江市',
                         '江苏省',
                         '南京市',
                         '深圳市'
-                    ],
-                    type1 : ['出发地','目的地','出发地1','出发地二','出发地三','出发地四','出发第五'],
-                    type2 : ['全部','单独','总共','个别']
+                        ],
+                        index:0
+                    },
+                    type1 : {
+                        data:['目的地','全国','目的地1','目的地二','目的地三','目的地四','目的地五'],
+                        index:0
+                    },
                 },
                 neednote : {
                     centont: ''
@@ -791,6 +1042,37 @@
             }
         },
         methods : {
+             paythanks_show (bl) {
+                if(!bl) {
+                    this.order_derails.data.premium = this.paythanks_prve;
+                }
+                if(this.paythanks_num_show) {
+                    console.log(111);
+                    if(!this.paythanks_num) {
+                        alert('金额不能为空');
+                        return;
+                    }
+                    this.order_derails.data.premium = this.paythanks_num + '元'
+                }
+                this.paythanks_num_show = false;
+                this.paythanks = false;
+                this.paythank_index = 0;
+
+            },
+            paythank_click (index) {
+                this.paythanks_prve = this.order_derails.data.premium
+                this.paythank_index = index;
+                this.order_derails.data.premium = this.paythanks_data[index];
+                if(index == 3) {
+                    this.paythanks_num='';
+                    this.paythanks_num_show = true;
+                }
+            },
+            record_all(){
+                this.option.adress.index=1;
+                this.option.type1.index=1;
+                console.log(1);
+            },
             submit() {
                 this.paying = true;
                 if(this.validation) {
@@ -798,7 +1080,11 @@
                 }
             },
             show_picker(index){
-                this.$refs['picker' + index].show();
+                if(index==1) {
+                    this.$refs['picker' + index].show();
+                }else {
+                    this.paythanks = true;
+                }
             },
             handlePickerCancel() {
                 console.log(1);

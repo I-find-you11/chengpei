@@ -34,7 +34,7 @@
         </div>
         <div class='goods package'>
             <div class='title'>
-                <span>名称</span>
+                <span>包装</span>
                 <input v-model="goods.data.package" placeholder="点击输入，最多20个字" />
             </div>
             <div class='chang'>
@@ -93,7 +93,7 @@
                 if(this.goods.chang2_arr.indexOf(item) == -1) {
                     if(this.goods.chang2_arr.length < 2) {
                         this.goods.chang2_arr.push(item);
-                        this.goods.data.package = this.goods.chang2_arr.toString('.');
+                        // this.goods.data.package = this.goods.chang2_arr.toString('.');
                         el.target.className = 'active';
                     }else {
                         return false;
@@ -101,7 +101,7 @@
                 }else {
                     let this_index = this.goods.chang2_arr.indexOf(item);
                     this.goods.chang2_arr.splice(this_index,1);
-                    this.goods.data.package = this.goods.chang2_arr.toString('.');
+                    // this.goods.data.package = this.goods.chang2_arr.toString('.');
                     el.target.className = '';
                     return false;
                 }
@@ -267,11 +267,10 @@
     height: .53rem;
     text-align: center;
     line-height: .53rem;
-    position: fixed;
     bottom: .1rem;
     z-index: 999;
     left:0;
     right: 0;
-    margin: 0 auto;
+    margin: 0.9rem auto 0;
 }
 </style>

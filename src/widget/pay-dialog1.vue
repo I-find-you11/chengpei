@@ -226,7 +226,7 @@ export default {
             permium: 100,
             charge: 100,
             balance: 53,
-            selectWay: null
+            selectWay: 'alipay'
         }
     },
     props: ['identify'],
