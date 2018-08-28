@@ -61,7 +61,10 @@
             .f-right{
                 width: .66rem;
                 height: .26rem;
-                line-height: .26rem;
+                // line-height: .26rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
                 box-sizing: border-box;
                 border-radius: .03rem;
                 text-align: center;
@@ -107,7 +110,7 @@ export default {
     props: ['data'],
     methods: {
         onPay(){
-            this.$emit('onPay',this.data.number)
+            this.$router.push('/pay/'+this.data.number)
         }
     }
 }

@@ -3,7 +3,7 @@
     background: white;
     margin: 0 .12rem;
     margin-top: .56rem;
-    border-radius: .03rem .03rem 0 0;
+    border-radius: .04rem;
     overflow: hidden;
     box-shadow: 0px 2px 15px 0px rgba(144, 143, 143, 0.35);
 }
@@ -49,7 +49,7 @@
     margin-top: .06rem;
 }
 .select-group{
-    padding: .06rem 0;
+    padding-top: .06rem;
 }
 .pay-way{
     display: flex;
@@ -128,7 +128,7 @@
     .confirm{
         background: #d43d3e;
         border-radius: .04rem;
-        width: 64%;
+        width: 100%;
     }
 }
 </style>
@@ -191,7 +191,7 @@
             </div>
         </div>
         <div class="btns wraper">
-            <div class="cancel" @click="qrcode">扫码支付</div>
+            <!-- <div class="cancel" @click="qrcode">扫码支付</div> -->
             <div class="confirm" @click="confirm">{{selectWay=='credit'?'确定':'去支付'}}</div>
         </div>
     </div>
@@ -209,7 +209,7 @@ export default {
             permium: 100,
             charge: 100,
             balance: 53,
-            selectWay: null
+            selectWay: 'alipay'
         }
     },
     components: {

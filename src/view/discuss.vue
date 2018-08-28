@@ -183,10 +183,10 @@ import Photo from '../widget/select'
 export default {
     data(){
         return {
-            dis: null,
-            punctual: 0,
-            attitude: 0,
-            completeness: 0,
+            dis: 'positive',
+            punctual: 5,
+            attitude: 5,
+            completeness: 5,
             say: null,
             strLength: 0
         }
