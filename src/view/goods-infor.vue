@@ -4,14 +4,14 @@
         <div class='goods name'>
             <div class='title'>
                 <span>名称</span>
-                <input v-model="goods.data.name" placeholder="点击输入，最多20个字" />
+                <input v-model="goods.data.name" placeholder="点击输入，最多20个字" @input="changeName" />
             </div>
             <div class='chang'>
                 <span 
                     v-for="(item,index) in goods.chang1" 
                     :key='index' 
-                    :class="goods.data.name_type==index?'active':''"
-                    @click="name_click(index)"
+                    :class="goods.data.name_type===index?'active':''"
+                    @click="name_click(index,item)"
                 >{{item}}</span>
             </div>
         </div>
@@ -70,7 +70,7 @@
                 goods : {
                     data : {
                         name : '',
-                        name_type : 0,
+                        name_type : '',
                         num : '',
                         weight: '',
                         volume : '',
@@ -85,11 +85,14 @@
             }
         },
         methods : {
-            name_click(index) {
+            name_click(index,name) {
+                this.goods.data.name = name;
                 this.goods.data.name_type = index;
             },
+            changeName(){
+                this.goods.data.name_type = ''
+            },
             package_click(item,el) {
-                console.log(1);
                 if(this.goods.chang2_arr.indexOf(item) == -1) {
                     if(this.goods.chang2_arr.length < 2) {
                         this.goods.chang2_arr.push(item);
