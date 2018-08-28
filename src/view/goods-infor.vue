@@ -35,13 +35,14 @@
         <div class='goods package'>
             <div class='title'>
                 <span>包装</span>
-                <input v-model="goods.data.package" placeholder="点击输入，最多20个字" />
+                <input v-model="goods.data.package" placeholder="点击输入，最多20个字" @input="packageChange" />
             </div>
             <div class='chang'>
                 <span 
                     v-for="(item,index) in goods.chang2" 
                     :key='index' 
-                    @click="package_click(item,$event)"
+                    :class="goods.data.package_type===index?'active':''"
+                    @click="package_click(item,index)"
                 >{{item}}</span>
             </div>
         </div>
@@ -74,7 +75,8 @@
                         num : '',
                         weight: '',
                         volume : '',
-                        package : ''
+                        package : '',
+                        package_type: ''
                     }, 
                     chang1 : ['日用品','文件','水果','电子产品'],
                     chang2 : ['托盘','木架','袋装','纸箱'],
@@ -92,22 +94,12 @@
             changeName(){
                 this.goods.data.name_type = ''
             },
-            package_click(item,el) {
-                if(this.goods.chang2_arr.indexOf(item) == -1) {
-                    if(this.goods.chang2_arr.length < 2) {
-                        this.goods.chang2_arr.push(item);
-                        // this.goods.data.package = this.goods.chang2_arr.toString('.');
-                        el.target.className = 'active';
-                    }else {
-                        return false;
-                    }
-                }else {
-                    let this_index = this.goods.chang2_arr.indexOf(item);
-                    this.goods.chang2_arr.splice(this_index,1);
-                    // this.goods.data.package = this.goods.chang2_arr.toString('.');
-                    el.target.className = '';
-                    return false;
-                }
+            package_click(item,index) {
+                this.goods.data.package = item;
+                this.goods.data.package_type = index;
+            },
+            packageChange(){
+                this.goods.data.package_type = ''
             },
             photo_change() {
                 if(this.goods.photo_index<3){
