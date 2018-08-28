@@ -490,6 +490,60 @@
     bottom: 0;
     background: rgba(0,0,0,.2);
 }
+.paythanks {
+    width: 3.5rem;
+    border-radius: .05rem;
+    margin: calc(50vh - 1rem) auto 0;
+    background: #fff;
+    font-size: .15rem;
+    .title {
+        height: .6rem;
+        line-height: .6rem;
+        text-align: center;
+        font-size: .16rem;
+        color: #000000;
+        border-bottom: .01rem solid #ebebeb;
+    }
+    .content {
+        height: .87rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: .01rem solid #ebebeb;
+        padding:0 .15rem;
+        span {
+            display: inline-block;
+            width: .71rem;
+            height: .32rem;
+            line-height: .32rem;
+            border: .01rem solid #bdbdbd;
+            text-align: center;
+            border-radius: .03rem;
+            font-size: .15rem;
+        }
+    }
+    .bottom {
+        height: .52rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: .52rem;
+        font-size: 0;
+        span {
+            color:#d75052;
+            display: inline-block;
+            width: 48%;
+            font-size: .15rem;
+            text-align: center;
+            height: .4rem;
+            line-height: .4rem;
+            &:first-child {
+                color: #a2a2a2;
+                border-right:#d1d1d1 solid .02rem; 
+            }
+        }
+    }
+}
 </style>
 <template>
     <div style='min-height:100vh' @click='hide'>
@@ -576,8 +630,8 @@
             @confirm="handlePickerConfirm">
         </awesome-picker>
 
-        <!-- 收货时间 -->
-        <awesome-picker
+        <!-- 支付方式 -->
+        <!-- <awesome-picker
             ref="picker2"
             :data="picker2.data"
             :anchor="picker2.anchor"
@@ -590,8 +644,24 @@
             :swipeTime="picker2.swipeTime"
             @cancel="handlePickerCancel"
             @confirm="handlePickerConfirm">
-        </awesome-picker>
+        </awesome-picker> -->
 
+        <!-- 感谢费 -->
+        <div class='alert_all' v-if="paythanks">
+            <div class='paythanks'>
+                <div class="title">感谢费</div>
+                <div class='content'>
+                    <span>10元</span>
+                    <span>15元</span>
+                    <span>20元</span>
+                    <span>其他 ></span>
+                </div>
+                <div class='bottom'>
+                    <span>取消</span>
+                    <span>确定</span>
+                </div>
+            </div>
+        </div>
         <!-- 支付 -->
         <div class='alert_all' v-if="paying">
             <pay-dialog @click.stop="" v-if="paying" :identify="payNumber" @cancel="cancel" @confirm="confirm"></pay-dialog>
@@ -700,6 +770,7 @@
     export default {
         data() {
             return {
+                paythanks:true,
                 paying : false,
                 payNumber: null,
                 picker1 : {
