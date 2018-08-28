@@ -653,7 +653,6 @@
         </div>
 
         <!-- 送货记录 -->
-        <div class='alert_all' v-if='index_top==1'>
             <div class='record' v-if="index_top==1">
                 <div class='select'>
                     <div>
@@ -691,7 +690,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
