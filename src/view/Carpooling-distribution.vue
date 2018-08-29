@@ -1092,14 +1092,15 @@
              paythanks_show (bl) {
                 if(!bl) {
                     this.order_derails.data.premium = this.paythanks_prve;
-                }
-                if(this.paythanks_num_show) {
-                    console.log(111);
-                    if(!this.paythanks_num) {
-                        alert('金额不能为空');
-                        return;
+                }else {
+                    if(this.paythanks_num_show) {
+                        console.log(111);
+                        if(!this.paythanks_num) {
+                            alert('金额不能为空');
+                            return;
+                        }
+                        this.order_derails.data.premium = this.paythanks_num + '元'
                     }
-                    this.order_derails.data.premium = this.paythanks_num + '元'
                 }
                 this.paythanks_num_show = false;
                 this.paythanks = false;
@@ -1142,16 +1143,6 @@
                     this.order_derails.data.time = data[0].value + data[1].value;
                 }
             },
-            safe_cancel() {
-                this.safeshow = false;
-            },
-            safe_confirm(data){
-                this.safeshow = false;
-                console.log(data);
-            },
-            safe_show() {
-                this.safeshow = true;
-            },
             neednote_cancel() {
                 this.neednoteshow = false;
             },
@@ -1183,6 +1174,23 @@
                 this.paying = false;
                 console.log(data);
             },
+            safe_cancel() {
+                this.safeshow = false;
+            },
+            safe_confirm(){
+                // if(!this.safe.value) {
+                //     alert('输入金额');
+                //     return false;
+                // }
+                // if(!this.selectWay) {
+                //     alert('请选择保险');
+                //     return false;
+                // }
+                this.safeshow = false;
+            },
+            safe_show() {
+                this.safeshow = true;
+            } ,
             selectPayWay(type){
                 this.selectWay = type;
             },
