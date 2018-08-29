@@ -121,6 +121,7 @@
                 }
                 var str = this.goods.data.name + ' ' + this.goods.data.num  + '件' + this.goods.data.weight + '公斤/' + this.goods.data.volume + '方';
                 console.log(str);
+                this.$emit('add',str);
             }
         },
         components : {
