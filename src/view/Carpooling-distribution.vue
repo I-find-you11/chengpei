@@ -638,7 +638,7 @@
             <div class='item note'>
                 <img src='@/assets/img/icon_2.png' />
                 <div>
-                    <span @click.stop='neednote_show' :class='order_derails.data.note?"on":""'>{{order_derails.data.note? '有需求' : '需求备注'}}</span>
+                    <span @click.stop='neednote_show' :class='order_derails.data.note.length>0?"on":""'>{{order_derails.data.note.length>0? '有需求' : '需求备注'}}</span>
                     <div>
                         <img src='@/assets/img/detail3.png'>
                         <span @click='show_picker(2)' :class='order_derails.data.premium?"on":""'>{{order_derails.data.premium? order_derails.data.premium : '我要加价'}}</span>
@@ -739,7 +739,7 @@
                     <div>
                         <div v-for='(item,index) in neednotes_arr'
                             :key='index'
-                            @click='neednote_click(item)'
+                            @click='neednote_click(item,index)'
                             :class='{on:item.bg}'
                             >
                             <p>{{item.value1}}</p>
@@ -968,7 +968,7 @@
                         ],
                         time : '',
                         insurance : '',
-                        note: null,
+                        note: [],
                         premium : '',
                         cost : '',
                         id: 1
@@ -1156,14 +1156,25 @@
                 this.neednoteshow = false;
             },
             neednote_confirm(data){
+                if(this.order_derails.data.note==0) {
+                    alert('请添加需求');
+                    return false;
+                }
                 this.neednoteshow = false;
-                console.log(data);
             },
             neednote_show() {
                 this.neednoteshow = true;
             },
-            neednote_click(item) {
+            neednote_click(item,index) {
                 item.bg = !item.bg;
+                if(item.bg) {
+                    this.order_derails.data.note.push(index);
+                }else {
+                    let index_ =  this.order_derails.data.note.indexOf(index);
+                    this.order_derails.data.note.splice(index_,1);
+                    
+                }
+                console.log(this.order_derails.data.note);
             },
             cancel(){
                 this.paying = false;

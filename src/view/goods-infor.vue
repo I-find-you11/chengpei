@@ -111,17 +111,29 @@
                 }
             },
             submit() {
-                for (let i in this.goods.data) {
-                    if(i!='name_type') {
-                        if(this.goods.data[i] == '') {
-                            alert('请完善选项');
-                            return false;
-                        }
-                    }
+                console.log(this.goods.data);
+                if(this.goods.data.name == '') {
+                    alert('请完善选项');
+                    return false;
+                }
+                if(this.goods.data.num == '') {
+                    alert('请完善选项');
+                    return false;
+                }
+                if(this.goods.data.weight == '' && this.goods.data.volume == '') {
+                    alert('请完善选项');
+                    return false;
+                }
+                if(this.goods.data.package == '') {
+                    alert('请完善选项');
+                    return false;
                 }
                 var str = this.goods.data.name + ' ' + this.goods.data.num  + '件' + this.goods.data.weight + '公斤/' + this.goods.data.volume + '方';
                 console.log(str);
                 this.$emit('add',str);
+                for(let i in this.goods.data) {
+                    this.goods.data[i] = '';
+                }
             }
         },
         components : {
