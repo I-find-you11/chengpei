@@ -266,6 +266,6 @@
     z-index: 999;
     left:0;
     right: 0;
-    margin: 0.9rem auto 0;
+    margin: 0.4rem auto 0;
 }
 </style>
