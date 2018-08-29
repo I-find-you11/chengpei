@@ -124,6 +124,11 @@ export default {
     props: ['left','msg',"text",'mark'],
     methods: {
         back(){
+            if(this.text == '货物详情') {
+                this.$emit('confirm',false);
+                console.log(11);
+                return false;
+            }
             this.$router.go(-1);
         }
     }

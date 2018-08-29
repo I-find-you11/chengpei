@@ -1,6 +1,6 @@
 <template>
     <div class='goods_infor'>
-        <user-header text='货物详情'></user-header>
+        <user-header text='货物详情' @confirm='hide'></user-header>
         <div class='goods name'>
             <div class='title'>
                 <span>名称</span>
@@ -87,6 +87,10 @@
             }
         },
         methods : {
+            hide(bl) {
+                console.log(11111);
+                this.$emit('confirm',false);
+            },
             name_click(index,name) {
                 this.goods.data.name = name;
                 this.goods.data.name_type = index;
@@ -107,7 +111,16 @@
                 }
             },
             submit() {
-                console.log('提交成功');
+                for (let i in this.goods.data) {
+                    if(i!='name_type') {
+                        if(this.goods.data[i] == '') {
+                            alert('请完善选项');
+                            return false;
+                        }
+                    }
+                }
+                var str = this.goods.data.name + ' ' + this.goods.data.num  + '件' + this.goods.data.weight + '公斤/' + this.goods.data.volume + '方';
+                console.log(str);
             }
         },
         components : {

@@ -65,6 +65,20 @@
                 }
             }
         }
+        &.goods_infor {
+            position: relative;
+            &>span {
+                position: absolute;
+                top:0;
+                bottom: 0;
+                right: .15rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                font-size: .14rem;
+                color: #d73e41;
+            }
+        }
         &.goods_infor_add>div>a {
             position: absolute;
             width: .73rem;
@@ -561,9 +575,17 @@
         }
     }
 }
+.addgoods {
+    position: fixed;
+    z-index: 111;
+    top:0;
+    left: 0;
+    background: #fff;
+    min-height: 100vh;
+}
 </style>
 <template>
-    <div style='min-height:100vh' @click='hide'>
+    <div @click='hide'>
         <user-header text='拼车配货' mark='true'>
             <div >
                 <span @click='click_fn(0)' :class='{topon: index_top==0}'>预约发货</span>
@@ -594,12 +616,13 @@
             >
                 <img src='@/assets/img/detail2.png' />
                 <div class='on'>{{item.infor}}</div>
+                <span class='remove' @click='goods_infor_remove(index)'>删除</span>
             </div>
             <div class='item goods_infor_add'>
                 <img src='@/assets/img/detail2.png' />
                 <div>
                     <p>货物信息{{order_derails.data.goods.length != 0 ? order_derails.data.goods.length + 1 : ''}}</p>
-                    <a :href='"#/goods-infor/" + order_derails.data.id'>+添加货物</a>
+                    <a @click='add_show'>+添加货物</a>
                 </div>
             </div>
             <div class='item time'>
@@ -740,42 +763,46 @@
         </div>
 
         <!-- 送货记录 -->
-            <div class='record' v-if="index_top==1">
-                <div class='select'>
-                    <div>
-                        <user-select @confirm='confirm1'  :option='option.adress' :type='"adress"'></user-select>
-                        <span><img src='@/assets/img/arrow.png'></span>
-                    </div>
-                    <div>
-                        <user-select  @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
-                        <span><img src='@/assets/img/arrow.png'></span>
-                    </div>
-                    <div>
-                        <p @click='record_all'>全部</p>
-                        <span><img src='@/assets/img/arrow.png'></span>
-                    </div>
+        <div class='record' v-if="index_top==1">
+            <div class='select'>
+                <div>
+                    <user-select @confirm='confirm1'  :option='option.adress' :type='"adress"'></user-select>
+                    <span><img src='@/assets/img/arrow.png'></span>
                 </div>
-                <div class='list'>
-                    <div v-for='(item,index) in record.data' :key='index'>
+                <div>
+                    <user-select  @confirm='confirm1' :option='option.type1' :type='"type1"'></user-select>
+                    <span><img src='@/assets/img/arrow.png'></span>
+                </div>
+                <div>
+                    <p @click='record_all'>全部</p>
+                    <span><img src='@/assets/img/arrow.png'></span>
+                </div>
+            </div>
+            <div class='list'>
+                <div v-for='(item,index) in record.data' :key='index'>
+                    <div>
                         <div>
-                            <div>
-                                <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
-                            </div>
-                            <span>{{item.long}}</span>
+                            <span>{{item.ad_start}}</span> <img src='@/assets/img/arrow1.png'> <span>{{item.ad_end}}</span>
+                        </div>
+                        <span>{{item.long}}</span>
+                    </div>
+                    <div>
+                        <div>
+                            <p>{{item.content}}</p>
+                            <p>{{item.datetime}}</p>
                         </div>
                         <div>
-                            <div>
-                                <p>{{item.content}}</p>
-                                <p>{{item.datetime}}</p>
-                            </div>
-                            <div>
-                                <span>{{item.time}}</span>
-                                <span>重发</span>
-                            </div>
+                            <span>{{item.time}}</span>
+                            <span>重发</span>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class='addgoods' v-if='addgoods'>
+            <addgoods @confirm='addgoods_hide' @add='add_goods'></addgoods>
+        </div>
+        
         </div>
 </template>
 
@@ -784,9 +811,11 @@
     import PayDialog from '../widget/pay-dialog1'
     import select from '../widget/select2'
     import select1 from '../widget/select'
+    import addgoods from './goods-infor'
     export default {
         data() {
             return {
+                addgoods:false,
                 paythanks_prve : '',
                 paythanks_num : null,
                 paythanks_num_show: false,
@@ -1044,6 +1073,22 @@
             }
         },
         methods : {
+            add_show(){
+                this.addgoods = true;
+            },
+            add_goods(res) {
+                this.addgoods = false;
+                this.order_derails.data.goods.push({
+                    infor:res
+                })
+                console.log(res);
+            },
+            addgoods_hide() {
+                this.addgoods = false;
+            },
+            goods_infor_remove(index){
+                this.order_derails.data.goods.splice(index,1);
+            },
              paythanks_show (bl) {
                 if(!bl) {
                     this.order_derails.data.premium = this.paythanks_prve;
@@ -1159,7 +1204,8 @@
             'user-header': header,
             'pay-dialog': PayDialog,
             'user-select': select,
-            'up-photo' : select1
+            'up-photo' : select1,
+            'addgoods':addgoods
         }
     }
 </script>
